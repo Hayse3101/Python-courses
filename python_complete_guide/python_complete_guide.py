@@ -7,6 +7,18 @@ match name:
     case "Artem":
         print("Hello Artem")
 
+match sign_input := input("Введите знак операции: "):
+    case '+':
+        print("Знак операции +")
+    case '-':
+        print("Знак операции -")
+    case '*':
+        print("Знак операции *")
+    case '/':
+        print("Знак операции /")
+    case _:
+        print("Не понятно")
+
 # --------------------------------------------------------------------------
 # Lesson 4
 
