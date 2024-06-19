@@ -322,5 +322,93 @@ for i in range(1, 10):
 else:
     print('Well done')
 
+# --------------------------------------------------------------------------
+# Lesson 16 ----- Методы для работы со списками -----
+
+list_value2 = [1, 2, 3, 4, 5, 'hello', [1, 2, '1'], 7]
+names = ['Ivanov', 'Petrov', 'Sidorov']
+
+list_3 = [1, 2, 3,]
+list_4 = ['one', 'two', 'three']
+
+print(names[1])  # <- 2
+print(names[6][1])  # <- [1, 2, '1'] <- 2
+print(names[:4])  # <- [1, 2, 3, 4]
+names[1] = 'Artem'  # <- ['Ivanov', 'Artem', 'Sidorov']
+list_value2[2:5] = [10, 20, 30]  # <- [1, 2, 10, 20, 20, 'hello', [1, 2, '1'], 7]
+list_value2.append('python')  # <- [1, 2, 3, 4, 5, 'hello', [1, 2, '1'], 7, 'python']
+list_3.extend(list_4)  # <- [1, 2, 3, 'one', 'two', 'three']
+list_value2.insert(5, 6)  # [1, 2, 3, 4, 5, 6, 'hello', [1, 2, '1'], 7]
+list_value2.remove(3)  # <- [1, 2, 4, 5, 'hello', [1, 2, '1'], 7]
+names.pop(1)  # <- ['Ivanov', 'Sidorov']
+name4 = names.pop(0)  # <- 'Ivanov'
+
+# --------------------------------------------------------------------------
+# Lesson 17 ----- Изменяемые и неизменяемые люъекты -----
+
+int_value = 10  # <- Число не изменяемый объект
+print(f"{int_value}, id - {id(int_value)})")
+int_value = 20  # <- Пересоздали объект
+print(f"{int_value}, id - {id(int_value)})")  # <- id будет другое
+
+str_value = 'Hello'  # <- Строка не изменяемый объект
+print(f"{str_value}, id - {id(str_value)})")
+str_value += 'Python'  # <- Пересоздали объект
+print(f"{str_value}, id - {id(str_value)})")  # <- id будет другое
+
+list_value4 = [1, 2, 3]  # <- Списки изменяемые
+print(f"{list_value4}, id - {id(list_value4)}")
+list_value4[0] = 10  # <- Объект пересоздаваться не будет
+list_value4.append(10)  # <- Объект пересоздаваться не будет
+print(f"{list_value4}, id - {id(list_value4)}")  # <- id не изменился
+
+# --------------------------------------------------------------------------
+# Lesson 18 ----- дз -----
+
+""" Задача 1.1 """
+list_value5 = [1, 2, 3]
+for i in range(len(list_value5)):
+    list_value5[i] *= 2
+
+print(f"Полученный результат списка: {list_value5}")
+
+""" Задача 1.2 """
+list_value5 = [1, 2, 3]
+list_value6 = [i * 2 for i in list_value5]
+print(f"Полученный результат списка: {list_value5}")
+
 # -----
 
+""" Задача 2.1 """
+list_value5 = [1, 2, 3]
+sum_value = 0
+for i in range(len(list_value5)):
+    sum_value += list_value5[i] ** 2
+
+print(f"Полученный результат: {sum_value}")
+
+# -----
+
+""" Задача 3.1 """
+time_value = int(input("Сколько часов: "))
+litres = time_value * 0.5
+print(f"Сколько литров нужно выпить: {litres}")
+
+""" Задача 3.2 """
+time_value = int(input("Сколько часов: "))
+print(f"Сколько литров нужно выпить: {time_value // 2}")
+
+# -----
+
+""" Задача 4 """
+str_value = 'Hello World'
+if ' ' in str_value:
+    str_value.upper()
+else:
+    str_value.lower()
+
+# --------------------------------------------------------------------------
+# Lesson 19 ----- Решение домашнего задания -----
+""" Всё решено верно """
+# --------------------------------------------------------------------------
+# Lesson 20 ----- Кортежи -----
