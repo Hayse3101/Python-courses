@@ -218,3 +218,195 @@ class Person10:
 
 # -------------------------- 12 ООП Свойства только для чтения и вычисляемые свойства --------------------------
 
+
+class Person11:
+    def __init__(self, name, surname):
+        self._name = name
+        self._surname = surname
+        self._full_name = None
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+        self._full_name = None
+
+    @property
+    def surname(self):
+        return self.surname
+
+    @surname.setter
+    def surname(self, value):
+        self._surname = value
+        self._full_name = None
+
+    @property
+    def full_name(self):
+        if self._full_name is None:
+            self._full_name = f'{self._name} {self._surname}'
+        return self._full_name
+
+
+p = Person11('Ivan', 'Ivanoff')
+
+# ----------------------- 13 ООП Наследование, перегрузка методов и расширение функциональности -----------------------
+
+
+class Person12:  # <- Класс родитель
+    age = 0
+
+    def hello(self):
+        print("Hello Person")
+
+
+class Student(Person12):  # <- Наследование класса Person12
+    def hello(self):  # <- Перегрузка метода
+        print("Hello Student")
+
+    def goodbye(self):  # <- Расширение класса
+        print("Goodbye Student")
+
+
+s = Student()  # <- Экземпляр студента
+
+# ----------
+
+
+class IntelCpu:
+    cpu_socket = 1151
+    name = 'Intel'
+
+
+class I7(IntelCpu):  # <- Подкласс класса IntelCpu
+    pass
+
+
+class I5(IntelCpu):  # <- Подкласс класса IntelCpu
+    pass
+
+
+i5, i7 = I5(), I7()
+isinstance(i5, IntelCpu)  # <- True
+issubclass(I7, IntelCpu)  # <- True
+
+# -------------------------- 14 ООП Множественное наследование, mro, миксины --------------------------
+
+
+class Person13:
+    def hello(self):
+        print("Hello Person")
+
+
+class Student1(Person13):
+    def hello(self):
+        print("Hello Student1")
+
+
+class Prof(Person13):
+    def hello(self):
+        print("Hello Prof")
+
+
+class Someone(Student1, Prof):  # <- Множественное наследование
+    pass
+
+
+s_class = Someone()
+s_class.hello()  # <- "Hello Student1"
+
+# ----------
+
+
+class FoodMixin:
+    food = None
+
+    def get_food(self):
+        if self.food is None:
+            raise ValueError('Food should be set')
+        print(f'I like {self.food}')
+
+
+class Person14:
+    def hello(self):
+        print("Hello Person")
+
+
+class Student(FoodMixin, Person14):
+    food = 'Pizza'
+
+    def hello(self):
+        print("Hello Student")
+
+
+s_class = Student()
+
+# --------------------------  15 ООП Полиморфизм, перегрузка операторов --------------------------
+
+
+class Person15:
+    age = 1
+
+    def __add__(self, value):
+        self.age += 1
+        return self.age
+
+
+p_person = Person15()
+p_person + 123  # <- 2
+p_person + 113  # <- 3
+
+# ----------
+
+
+class Room:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.area = self.x * self.y
+
+    def __add__(self, room_obj):
+        if isinstance(room_obj, Room):
+            return self.area + room_obj.area
+        raise TypeError('Wrong object')
+
+    def __eq__(self, room_obj):
+        if isinstance(room_obj, Room):
+            if self.area == room_obj.area:
+                return True
+            return False
+
+
+r1 = Room(3, 5)
+r2 = Room(4, 7)
+
+# -------------------------- 16 ООП Хэшируемые объекты и равенство --------------------------
+
+
+class Person16:
+    def __init__(self, name_value):
+        self._name = name_value
+
+    @property
+    def name(self):
+        return self._name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def __eq__(self, person_obj):
+        return isinstance(person_obj, Person16) and self.name == person_obj.name
+
+
+p_person1 = Person16('Ivan')
+p_person2 = Person16('Ivan')
+print(p_person1 == p_person2)  # <- True
+p_person3 = Person16('Oleg')
+print(p_person1 == p_person3)  # <- False
+d = {p_person1: "Ivanoff Ivan"}
+d.get(p_person1)  # <- "Ivanoff Ivan"
+
+# -------------------------- 17 ООП super() и делегирование родителям --------------------------
+
