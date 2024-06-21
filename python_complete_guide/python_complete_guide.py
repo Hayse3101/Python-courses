@@ -444,3 +444,199 @@ for i in t5:
 # --------------------------------------------------------------------------
 # Lesson 21 ----- Решение домашнего задания -----
 
+""" Задача 1.1 """
+
+words = ['мадам', 'топот', 'test', 'madam', 'word']
+new_words = []
+
+for word in words:
+    if word == word[::-1]:
+        new_words.append(word)
+
+print(f"Новый список слов: {new_words}")
+
+""" Задача 1.2 """
+
+new_words = [word for word in words if word == word[::-1]]
+print(f"Новый список слов: {new_words}")
+
+""" Задача 2.1 """
+my_str = ['Око за око', 'А роза упала на лапу Азора', 'Около Миши молоко']
+palindromes = []
+
+for str_value in my_str:
+    word_r = str_value.replace(' ', '').lower()
+    if word_r == word_r[::-1]:
+        palindromes.append(word_r)
+
+print(f"Новый список слов: {new_words}")
+
+# ----- Метод .join()
+
+l21_1 = list(range(1, 10))
+l21_2 = list('Hello')
+
+s21_1 = '-'.join(map(str, l21_1))
+s21_2 = '*'.join(l21_2)
+
+print(s21_1)  # <- 1-2-3-4-5-6-7-8-9
+print(s21_2)  # <- H*e*l*l*o
+
+# --------------------------------------------------------------------------
+# Lesson 22 ----- Множества -----
+
+set_22_1 = {'apple', 'orange', 'apple', 'pear', 'orange', 'banana'}
+set_22_2 = set('hello')
+set_22_3 = {i for i in range(1, 11)}
+set_22_4 = {5, 3, 10, 1, 9, 2}
+set_22_5 = set()
+
+set_22_a = set('abracadabra')
+set_22_b = set('alacazam')
+set_22_c = set_22_a - set_22_b  # <- вычитание - убираем из A все буквы, котореы есть в B
+set_22_d = set_22_a | set_22_b  # <- объединение - буквы или B A, или A B
+set_22_e = set_22_a & set_22_b  # <- пересечение - буквы и B A, и A B
+set_22_f = set_22_a ^ set_22_b  # <- множество из элементов - буквы B A или B, но и не в обоих
+
+print(f"{set_22_a} {set_22_b} {set_22_c} {set_22_d} {set_22_e} {set_22_f}", sep='\n')
+
+set_22_6 = set_22_1.copy()  # <-возвращает копию множества
+set_22_1.add('t')  # <- Добовляет элемент в множество
+set_22_1.remove('t')  # <- удаляет элемент из множества
+set_22_3.discard(4)  # <- удаляет элемент, если он находится в множестве
+set_22_7 = set_22_1.pop()  # <- Возращает и удаляет первый элемент множества
+set_22_4.clear()  # <- Очистка множества
+
+fset_22_1 = frozenset('hello')  # <- frozenset это то же самое множество, только не изменяемое
+
+print(f"{set_22_1} - {type(set_22_1)}")  # <- {'pear', 'banana', 'apple', 'orange'}
+print(set_22_2)  # <- {'l', 'h', 'e', 'o'}
+print(set_22_3)  # <- {1, 2, 3, 4, 5, 6 ,7 ,8, 9, 10}
+print(set_22_4)  # <- {1, 2, 3, 5, 9, 10}
+print(set_22_5)  # <- {}
+
+# --------------------------------------------------------------------------
+# Lesson 23 ----- Словари -----
+
+dict_23_1 = {}  # <- ключ: значение
+dict_23_2 = {'title': 'Sony', 'price': 100}
+dict_23_3 = dict(title='iPhone', price=110)
+dict_23_4 = dict.fromkeys(['price', 'price2', 'price3'], 50)
+dict_23_5 = {i: i + 1 for i in range(1, 10)}
+
+list_ueser = [  # <- Многоуровневый список
+    ['bob@gmail.com', 'Bob'],
+    ['katy@gmail.com', 'Katy'],
+    ['jhon@gmail.com', 'Jhon'],
+]
+
+dict_users = dict(list_ueser)
+
+print(list_ueser)  # <- [['bob@gmail.com', 'Bob'], ['katy@gmail.com', 'Katy'], ['jhon@gmail.com', 'Jhon']]
+print(dict_users)  # <- {'bob@gmail.com': 'Bob', 'katy@gmail.com': 'Katy', 'jhon@gmail.com': 'Jhon'}
+
+print(f"{dict_23_1} - {type(dict_23_1)}")
+print(dict_23_2)  # <- {'title': 'Sony', 'price': '100'}
+print(dict_23_3)  # <- {'title': 'iPhone', 'price': '110'}
+print(dict_23_4)  # <- {'price': 50, 'price2': 50, 'price3': 50}
+print(dict_23_5)  # <- {1: 2, 2: 3, 3: 4, 4: 5, 5: 6, 6: 7, 7: 8, 8: 9, 9: 10}
+
+print(dict_23_1['title'])  # <- Sony
+print(dict_23_1.get('title'))  # <- Sony
+print(dict_23_2['price'])  # <- 110
+
+for key in dict_23_1:  # <- title, price
+    print(key, end=" ")
+
+for key in dict_23_1:  # <- title, price
+    print(dict_23_1[key], end=" ")  # <- Sony, 100
+
+for key in dict_23_1:
+    print(f"{key}: {dict_23_1[key]}", end=" ")  # <- title: Sony, price: 100
+
+# Метод .items возвращает пару ключ - значение
+for key, value in dict_23_1.items():
+    print(f"{key}: {value}", end=" ")  # <- title: Sony, price: 100
+
+products = [
+    {'title': 'Sony', 'price': 100},
+    {'title': 'iPhone', 'price': 110},
+    {'title': 'Samsung', 'price': 90},
+]
+
+print(products)  # <- {'title': 'Sony', 'price': 100}, {'title': 'iPhone', 'price': 110},
+# {'title': 'Samsung', 'price': 90},
+
+for product in products:
+    print(product['title'], [product['price']])
+
+# --------------------------------------------------------------------------
+# Lesson 24 ----- Методы словаря -----
+
+dict_24_1 = {'title': 'Sony', 'price': 100}
+
+"""
+dict_24_1.clear() - Очищает словарь
+dict_24_1.cope() - Возвращает копию словаря
+dict_24_1.get(key[, default]) - Возвращает значение ключа, но если его нет, не бросате исключение, а возвращает 
+default (по умолчанию None) 
+dict_24_1.items() - Возвращает пары (ключ, значение)
+dict_24_1.keys() - Возвращает ключи в словаре
+dict_24_1.pop(key,[, default])  - удаляет ключ и возвращает значение
+dict_24_1.popitem() - Удаляет и возвращает пару(ключ, значение)
+dict_24_1.update([other]) - обновляет словарь, добавляя пары (ключ, значение) из other
+dict_24_1.values() - возвращает значения в словаре
+"""
+
+# --------------------------------------------------------------------------
+# Lesson 25 ----- Игра угадай число -----
+
+""" Задача 1 - моё решение без random """
+
+numbers = list(range(1, 101))
+numbers = map(str, numbers)
+numbers = set(numbers)
+
+rand_number = int(numbers.pop())
+
+count = 0
+
+print("-- Было загаданно число от 1 до 100 --")
+print("-- Попробуй угадай --")
+while True:
+    num_user = int(input("Введите число: "))
+    count += 1
+
+    print(" ------- ")
+
+    if num_user == rand_number:
+        print(f"Поздравляю, ты выиграл! Загадонное число {rand_number}")
+        print(f"Колличество попыток: {count}")
+        break
+    elif num_user < rand_number:
+        print("Твоё число меньше загадонного")
+    elif num_user > rand_number:
+        print("Твоё число больше загадонного")
+
+    print(" ------- ")
+
+""" Задача 1 - решение преподавателя """
+
+x = 75
+user_num = 0
+cnt = 0
+
+while True:
+    user_num = int(input("Я загадал число от 1 до 100 - угадай его: "))
+    cnt += 1
+    if user_num == x:
+        print(f"Ты угадал число за {cnt} попыток")
+        print("Спасибо за игру")
+        break
+    elif user_num > x:
+        print("Моё число меньше")
+    else:
+        print("Моё число больше")
+
+# --------------------------------------------------------------------------
+# Lesson 26 ----- Пользовательские функции -----
