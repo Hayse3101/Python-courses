@@ -2,6 +2,9 @@
 # Теоретическая информация
 # ------------------------------ 01 ООП Объекты и классы ------------------------------
 from datetime import datetime
+from time import time
+from random import choice
+import weakref
 import pytz
 
 
@@ -409,4 +412,184 @@ d = {p_person1: "Ivanoff Ivan"}
 d.get(p_person1)  # <- "Ivanoff Ivan"
 
 # -------------------------- 17 ООП super() и делегирование родителям --------------------------
+# -------------------------- 18 ООП Дескрипторы. Non-data дескрипторы --------------------------
+
+
+class Person17:
+    def __init__(self, name_value):
+        self.name_value = name
+
+
+class Student2(Person17):
+    def __init__(self, name_value, surname):
+        super().__init__(name)
+        self.surname = surname
+
+
+s_student = Student2('Ivan', 'Ivanoff')
+
+# -------------------------- 18 ООП Дескрипторы. Non-data дескрипторы --------------------------
+
+
+class StringD:
+    def __init__(self, value=None):
+        if value:
+            self.set(value)
+
+    def set(self, value):
+        self._value = value
+
+    def get(self):
+        return self._value
+
+
+class Person18:
+    def __init__(self, name, surname):
+        self.name = StringD(name)
+        self.surname = StringD(surname)
+
+
+p_person4 = Person18('Ivan', 'Ivanoff')
+
+# ----------
+
+
+class Epoch:
+    def __get__(self, intance, owner_class):
+        return int(time())
+
+
+class MyTime:
+    epoch = Epoch()
+
+
+my_time = MyTime()
+
+# ----------
+
+# class Game:
+#     @property
+#     def rock_paper_scissors(self):
+#         return choice(['Rock', 'Paper', 'Scissors'])
+#
+#     @property
+#     def flip(self):
+#         return choice(['Heads', 'Tails'])
+#
+#     @property
+#     def dice(self):
+#         return choice(range(1, 7))
+
+# game = Game()
+
+
+class Dice:
+    @property
+    def number(self):
+        return choice(range(1, 7))
+
+
+class Choice:  # <- Non-date дескриптор
+    def __init__(self, *choice):
+        self._choice = choice
+
+    def __get__(self, obj, owner):
+        return choice(self._choice)
+
+
+class Game:
+    dice = Choice(1, 2, 3, 4, 5, 6)
+    flip = Choice('Heads', 'Tails')
+    rock_paper_scissors = Choice('Rock', 'Paper', 'Scissors')
+
+
+dice = Dice()
+game = Game()
+
+# -------------------------- 19 ООП Дескрипторы данных --------------------------
+
+
+class Epoch2:
+    def __get__(self, instance, owner_class):
+        if instance is None:
+            return self
+        return int(time())
+
+    def __set__(self, instance, value):
+        pass
+
+
+class MyTime2:
+    epoch = Epoch2()
+
+
+my_time1 = MyTime2()
+
+# ----------
+
+
+class IntDescriptor:
+    def __init__(self):
+        self._values = {}
+
+    def __set__(self, instance, value):
+        self._values[instance] = value
+
+    def __get__(self, instance, owner_class):
+        if instance is None:
+            return self
+        return self._values.get(instance)
+
+
+class Vector:
+    x = IntDescriptor()
+    y = IntDescriptor()
+
+
+v1_vector = Vector()
+v2_vector = Vector()
+v3_vector = Vector()
+
+# ------------------ 20 ООП Слабые ссылки weakref и проблема хранения данных в экземпляре дескриптора ------------------
+
+
+# class Person20:
+#     def __init__(self, name_value):
+#         self.name_value = name
+#
+#     def __eq__(self, obj):
+#         return isinstance(obj, Person20) and self.name_value == obj.name_value
+#
+#     def __hash__(self):
+#         return hash(self.name_value)
+#
+#
+# p20 = Person20('Ivan')
+
+
+class IntDescriptor2:
+    def __init__(self):
+        self._values = weakref.WeakKeyDictionary()
+
+    def __set__(self, instance, value):
+        self._values[instance] = value
+
+    def __get__(self, instance, owner_class):
+        if instance is None:
+            return self
+        return self._values.get(instance)
+
+
+class Vector2:
+    x = IntDescriptor2()
+    y = IntDescriptor2()
+
+
+v1_vector2 = Vector2()
+v2_vector2 = Vector2()
+v3_vector2 = Vector2()
+
+# ------------------ 21 ООП Метод __set_name__ и хранение данных в экземпляре класса-владельца ------------------
+
+
 
