@@ -13,13 +13,15 @@ def get_html(url):  # <- url - это ссылка на сайт  | <- Полу�
 
 def get_date(html):  # <- Получение данных c html документа
     soup = BeautifulSoup(html, 'lxml')  # <- Создание экземляра класса BeautifulSoup
-    h1 = soup.find()
+    h1 = soup.find('div', id='home-welcom').find('header').find('h1').text
+    return h1
 
 
 def main():
     url = 'https://ru.wordpress.org/'  # <- переменная url со ссылкой на нужный сайт
-    print(get_html(url))  # <- получение ответа сервера
+    print(get_date(get_html(url)))  # <- получение ответа сервера
 
 
 if __name__ == '__main__':  # <- Проверка на то, что файл был запущен из основного файла
     main()
+
