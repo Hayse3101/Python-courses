@@ -1,3 +1,10 @@
+import os
+# from random import randint
+# import random as r
+# from random import *
+import random
+import libs
+
 # Это тут так, пусть будет
 name = input("g: ")
 
@@ -639,4 +646,233 @@ while True:
         print("Моё число больше")
 
 # --------------------------------------------------------------------------
-# Lesson 26 ----- Пользовательские функции -----
+# Lesson 26 ----- Пользовательские функции. Часть 1 -----
+
+
+def hello(name, word):
+    print(f'Hello, {name}. Say {word}')
+
+
+def get_sum_print(a, b):
+    print(a + b)
+
+
+def get_sum_return(a, b):
+    return a + b
+
+
+hello('Bob', 'Hi')
+get_sum_print(10, 20)
+print(get_sum_return(40, 30))
+
+# --------------------------------------------------------------------------
+# Lesson 27 ----- Пользовательские функции. Часть 2 -----
+
+
+def set_register(s):
+    """ Дз """
+    if ' ' in s:
+        return s.upper()
+    else:
+        return s.lower()
+
+
+s_value = 'Hello World'
+print(set_register(s_value))
+
+# -----
+
+
+def get_sum_2(a, b, c=0, d=1):  # <- a и b - это позиционные аргументы | с и d это именованные аргументы
+    return a + b + c + d
+
+
+""" Позиционные аргументы передаются первыми, потом уже именованные """
+print(get_sum_2(1, 2, 3))
+
+# -----
+
+
+def get_sum_3(*args):
+    return sum(args)
+
+
+def func_1(**kwargs):
+    print(**kwargs)
+
+
+def func_2(a, b, *args, **kwargs):
+    print(f"a - {a}")
+    print(f"b - {b}")
+    print(f"*args - {args}")
+    print(f"**kwargs - {kwargs}")
+
+
+"""
+*{название аргумента} - это произвольное количество аргументов, которые преобразуются в картеж
+**{название аргумента} - это произвольное количество аргументов, которые преобразуются в словарь
+
+По сути, *args это позиционные аргументы, а **kwargs это именовынные аргументы
+
+"""
+func_2(10, 20, 30, 40, 50, x=60, y=70, z=80)
+func_1(a=1, b=5, c=20)
+print(get_sum_3(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+
+# --------------------------------------------------------------------------
+# Lesson 28 ----- Пользовательские функции. Часть 3 -----
+
+
+def get_sum_4(a: int, b: int) -> int:
+    """
+    Возвращает сумму вргументов a и b.
+
+    :param a: Первый аперант
+    :type a: int
+    :param b: Второй аперант
+    :type b: int
+    :return: Return type int
+    """
+    return a + b
+
+
+print(get_sum_4(10, 20))
+
+# -----
+
+
+def func_3():
+    global a
+
+    x = 5  # <- Локальная перемнная
+    a += 1
+
+    return a, x
+
+
+y = 5  # <- Глобальная переменная
+a = 5  # <- Глобальная переменная
+print(func_3())
+
+# -----
+
+
+def func_4(list_value):
+    return [i * 2 for i in list_value]
+
+
+def func_5(list_value):
+    def get_mult(x):
+        return int(x) * 2
+    return [get_mult(i) for i in list_value]
+
+
+arr_nums = [1, 2, 3]
+print(func_4(arr_nums))
+print(func_5(arr_nums))
+
+# --------------------------------------------------------------------------
+# Lesson 29 ----- Решение домашнего задания -----
+
+""" ДЗ 1. Моё решение"""
+
+
+def func_6(array: list):
+    if 'odd' in array:
+        if array.index('odd') in array:
+            return True
+        else:
+            return False
+    else:
+        return 'odd отсутствует'
+
+
+def odd_ball(arr):
+    return arr.index('odd') in arr if 'odd' in arr else 'odd отсутсвует'
+
+
+list_value7 = [1, 3, 5, 7, 'odd', 10, 8, 20, 14, 4]
+print(func_6(list_value7))
+print(odd_ball(list_value7))
+
+""" ДЗ 2. Моё решение"""
+
+
+def find_sum_args(*nums):
+    return sum([num for num in nums if num % 3 == 0 or num % 5 == 0])
+
+
+def find_sum_num(num):
+    return sum([n for n in range(num + 1) if n % 3 == 0 or n % 5 == 0])
+
+
+print(f"Сумма: {find_sum_args(10, 3, 6, 2, 4, 5, 15, 20, 21, 22, 23)}")
+print(f"Сумма: {find_sum_num(20)}")
+
+""" ДЗ 3. Моё решение"""
+
+
+def list_name(array):
+    new_array = []
+    for name in array:
+        if len(name) == 4:
+            new_array.append(name)
+
+    return new_array
+
+
+def list_name_gen(array):
+    return [name for name in array if len(name) == 4]
+
+
+names = ['Ryan', 'Kieran', 'Mark', 'Jhon', 'David', 'Paul']
+print(f"Новый писок: {list_name(names)}")
+print(f"Новый писок: {list_name_gen(names)}")
+
+""" ДЗ 1. Решение преподавателя"""
+
+
+def odd_ball(arr):
+    return arr.index('odd') in arr
+
+
+""" ДЗ 2. Решение преподавателя"""
+
+
+def find_sum_1(n):
+    res = 0
+    for i in range(n + 1):
+        if i % 3 == 0 or i % 5 == 0:
+            res += i
+    return res
+
+
+def find_sum_2(n):
+    return sum(i for i in range(n + 1) if i % 3 == 0 or i % 5 == 0)
+
+
+""" ДЗ 3. Решение преподавателя"""
+
+
+def get_names(names):
+    return [i for i in names if len(i) == 0]
+
+
+# --------------------------------------------------------------------------
+# Lesson 30 ----- Модули в Python -----
+
+print(os.getcwd())
+print(random.randint(1, 100))
+
+list_123 = [1, 2, 3, 4, 5]
+print(random.shuffle(list_123))
+
+str_ = 'Hello World'
+print(libs.get_len(str_))
+print(libs.get_count(str_, 'l'))
+
+test_f = libs.get_count
+print(test_f(str_, 'o'))
+
+# --------------------------------------------------------------------------
+# Lesson 31 ----- Модули Datetime-----
