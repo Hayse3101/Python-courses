@@ -6,6 +6,8 @@ import locale
 import random
 import libs
 from datetime import date, datetime, timedelta
+from bs4 import BeautifulSoup
+import urllib.request
 
 # Это тут так, пусть будет
 name = input("g: ")
@@ -974,3 +976,71 @@ open_file_4.close()  # <- Закрытие файла
 
 # --------------------------------------------------------------------------
 # Lesson 34 ----- Парсинг -----
+
+req = urllib.request.urlopen('https://www.mk.ru/')  # <- Обращаемся к сайту
+html = req.read()  # <- Читаем полученный html
+soup = BeautifulSoup(html, 'html.parser')  # <- Обрабатываем файл html под html.parser
+""" find_all возвращает спислк """
+news = soup.find_all('li', class_='top9__item')  # <- Ищим и сохраняем теги <li class="top9_item">
+
+results = []
+# print(news)
+
+for item in news:  # <- Перебираем полученные теги
+    """ find возвращает один элемент """
+    title = item.find('h3', class_="article-preview__title").get_text()  # <- Название | находим тег <h3>
+    print(title)
+    # desc = item.find('p', class_="article-preview__desc").get_text()  # <- Описание | находим тег <p>
+    desc = None
+    href = item.a.get('href')  # <- Ссылка
+    results.append({
+        'title': title,
+        'desc': desc,
+        'href': href,
+    })
+
+f = open('news.txt', 'w', encoding='utf-8')
+i = 1
+for item in results:
+    f.write(f"Новость №{i}\n\nНазвание: {item['title']}\nОписание: {item['desc']}\nСсылка: {item['href']}\n\n"
+            f"*****************\n")
+    i += 1
+f.close()
+
+# --------------------------------------------------------------------------
+# Lesson 35 ----- Ошибки и исключения -----
+
+try:
+    num = 100 / '0'
+except ZeroDivisionError:
+    num = 0
+except TypeError:
+    num = 1
+else:
+    print("else")
+finally:
+    print('finally')
+
+print(num)
+print('Hi')
+
+# --------
+
+flag = 'без ошибок'
+while True:
+    try:
+        input_num = int(input("Введите значение: "))
+        print(f"Результат деления: {100 / input_num}")
+    except ZeroDivisionError:
+        print("На ноль делить нельзя")
+        flag = 'с ошибками'
+    except ValueError:
+        print("Это должно быть число!")
+        flag = 'с ошибками'
+    else:
+        break
+    finally:
+        print(f"Программа отработал {flag}")
+
+# --------------------------------------------------------------------------
+# Lesson 36 ----- Основы и ООП. Классы и объекты -----
