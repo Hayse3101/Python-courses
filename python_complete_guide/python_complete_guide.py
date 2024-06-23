@@ -1,9 +1,11 @@
 import os
+import locale
 # from random import randint
 # import random as r
 # from random import *
 import random
 import libs
+from datetime import date, datetime, timedelta
 
 # Это тут так, пусть будет
 name = input("g: ")
@@ -875,4 +877,100 @@ test_f = libs.get_count
 print(test_f(str_, 'o'))
 
 # --------------------------------------------------------------------------
-# Lesson 31 ----- Модули Datetime-----
+# Lesson 31 ----- Модули Datetime -----
+
+""" date """
+today_var = date.today()
+
+print(today_var)  # <- 2024-06-23
+print(today_var.day)  # <- 23
+print(today_var.month)  # <- 6
+print(today_var.year)  # <- 2024
+print(today_var.weekday())  # <- 6
+
+""" datetime """
+now_1 = datetime.now()
+now_2 = datetime.today()
+
+print(f"now - {now_1}")
+print(f"today - {now_2}")
+
+print(now_1.day)
+print(now_1.month)
+print(now_1.year)
+print(now_1.weekday())
+print(now_1.hour)
+print(now_1.minute)
+print(now_1.second)
+
+days = ['пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс']
+print(days[now_1.weekday()])
+
+# -----
+
+locale.setlocale(locale.LC_ALL, 'ru_RU.UTF-8')
+
+print(now_1.strftime('%a'))
+print(now_1.strftime('%A'))
+
+print(f"Дата: {now_1.strftime("%A %d %b %Y")}")
+print(f"Время: {now_1.strftime("%H:%M:%S")}")
+
+print(now_1.strftime("%c"))
+print(now_1.strftime("%x"))
+print(now_1.strftime("%X"))
+
+# -----
+
+day_1 = now_1 + timedelta(days=1, hours=2, minutes=10)
+print(day_1.strftime('%c'))
+
+# --------------------------------------------------------------------------
+# Lesson 32 ----- Решение домашнего задания -----
+
+
+def read_dir(folders):
+    for root, dirs, fiels in os.walk(folders):
+        level = root.count(os.sep)
+        indent = ' ' * 4
+        print(f"{indent}[{os.path.basename(root)}]")
+        sub_indent = ' ' * 4 * (level + 1)
+        for file in fiels:
+            print(f'{sub_indent}{file}')
+
+
+read_dir('folder')
+
+# --------------------------------------------------------------------------
+# Lesson 33 ----- Работа с файлами -----
+
+open_file_1 = open('file_1.txt', encoding='utf-8')  # <- Открытие файла
+open_file_2 = open('file_2.txt', 'a', encoding='utf-8')  # <- Открытие файла
+open_file_3 = open('file_3.txt', 'a', encoding='utf-8')  # <- Открытие файла
+open_file_4 = open('file_4.txt', 'a', encoding='utf-8')  # <- Открытие файла
+open_file_5 = open('file_4.txt', 'r', encoding='utf-8')  # <- Открытие файла с режимом чтения
+
+lines = ['Новая строка 1',
+         'Новая строка 2',
+         'Новая строка 3']
+
+read_file = open_file_1.read()  # <- Чтение файла
+open_file_2.write('Новая строка')  # <- Записывает новую строчку в файл
+open_file_4.writelines(lines)  # <- Запись нескольких слов в одну строку
+open_file_4.writelines(f'{i}\n' for i in lines)  # <- Запись нескольких слов с разделением
+
+for i in lines:
+    open_file_3.write(i + '\n')
+
+for line in open_file_5:
+    print(line, end="")
+
+print(read_file)  # <- Вывод содержимого
+
+open_file_1.close()  # <- Закрытие файла
+open_file_2.close()  # <- Закрытие файла
+open_file_3.close()  # <- Закрытие файла
+open_file_4.close()  # <- Закрытие файла
+
+# --------------------------------------------------------------------------
+# Lesson 34 ----- Парсинг -----
