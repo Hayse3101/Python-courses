@@ -8,6 +8,8 @@ import libs
 from datetime import date, datetime, timedelta
 from bs4 import BeautifulSoup
 import urllib.request
+from classes import Person, Person_two, User, Employee
+from Parser_class import Parser
 
 # Это тут так, пусть будет
 name = input("g: ")
@@ -1044,3 +1046,65 @@ while True:
 
 # --------------------------------------------------------------------------
 # Lesson 36 ----- Основы и ООП. Классы и объекты -----
+
+
+class A_class_1:
+    pass
+
+
+a_1 = A_class_1()
+a_1.property_1 = 'Property 1'
+a_1.property_2 = 'Property 2'
+print(a_1)
+print(a_1.property_1)
+
+
+class A_class_2:
+    property_1 = 'Property 1'
+    property_2 = 'Property 2'
+    name = 'MisterX'
+
+    def say_hi(self, name=''):
+        if name:
+            return 'Hi' + name
+        else:
+            return 'Hello' + self.name
+
+
+a_2 = A_class_2()
+print(a_2.property_1)
+print(a_2.say_hi('Jhon'))
+
+# --------------------------------------------------------------------------
+# Lesson 37 ----- Конструктор класса -----
+
+person_1 = Person('Jhon')
+person_1.print_info()
+
+# --------------------------------------------------------------------------
+# Lesson 38 ----- Инкапсуляция -----
+
+person_2 = Person_two('Jhon')
+print(person_2.__dict__)
+# print(person_2._Person_two__age)
+print(person_2.id)
+person_2.id = 101300
+print(person_2.id)
+print(person_2)
+
+# --------------------------------------------------------------------------
+# Lesson 39 ----- Класс парсинга -----
+
+parser = Parser('https://www.mk.ru/', 'news.txt')
+parser.run()
+
+# --------------------------------------------------------------------------
+# Lesson 40 ----- Наследование -----
+
+person_3 = User('Katy', 19)
+print(person_3.id)
+person_3.id = 100300
+person_3.print_user_info()
+employee = Employee('Artem', 21)
+employee.print_user_info()
+employee.more_info()
