@@ -66,10 +66,18 @@ class User:
 
 
 class Employee(User):
-    company = 'Google'
+    def __init__(self, name, age, company):
+        super().__init__(name, age)  # <- ----- Полиморфизм -----
+        self.company = company  # <- ----- Полиморфизм -----
 
     def more_info(self):
-        print(f'{self.name} works in {self.company}')
+        super().print_user_info()
+        print(f'Work: {self.company}')
+
+    def __str__(self):  # <- ----- Полиморфизм -----
+        # return f'Name: {self.name}'  # <- ----- Полиморфизм -----
+        return f'Class {self.__class__.__name__}'  # <- ----- Полиморфизм -----
 
 # --------------------------------------------------------------------------
 # Lesson 41 ----- Полиморфизм -----
+

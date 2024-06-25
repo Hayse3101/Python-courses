@@ -1,1 +1,12 @@
-from python_complete_guide.Parser_class import Parser
+def make_title(func):
+    def warpped():
+        return func().capitalize().replace(',', '')
+    return warpped
+
+
+@make_title
+def hi():
+    return 'hello, world!'
+
+
+print(hi())

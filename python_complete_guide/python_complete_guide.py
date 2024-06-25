@@ -4,6 +4,8 @@ import locale
 # import random as r
 # from random import *
 import random
+import re
+
 import libs
 from datetime import date, datetime, timedelta
 from bs4 import BeautifulSoup
@@ -1105,6 +1107,94 @@ person_3 = User('Katy', 19)
 print(person_3.id)
 person_3.id = 100300
 person_3.print_user_info()
-employee = Employee('Artem', 21)
+employee = Employee('Artem', 21, 'Google')
 employee.print_user_info()
 employee.more_info()
+print(employee.__str__())
+
+# --------------------------------------------------------------------------
+# Lesson 41 ----- Полиморфизм -----
+
+# --------------------------------------------------------------------------
+# Lesson 42 ----- Декораторы -----
+
+
+def my_decorator(func):
+    def func_warpper():
+        print('Code before')
+        func()
+        print('Code after')
+    return func_warpper
+
+
+def make_title(func):
+    def warpped():
+        # title = func().capitalize().replace(',', '')
+        # # title = title.capitalize()
+        # # title = title.replace(',', '')
+        return func().capitalize().replace(',', '')
+    return warpped
+
+
+def hello():
+    return 'Hello, I am func "hello"'
+
+
+def super_func(func):
+    print('Hello, I am func "super_func"')
+    print(func())
+
+
+@my_decorator
+def func_test():
+    print('Hello, I am func "func_test"')
+
+
+@make_title
+def hi():
+    return 'hello, world!'
+
+
+var_test_func = hello
+super_func(var_test_func)
+func_test()
+print(hi())
+
+# --------------------------------------------------------------------------
+# Lesson 43 ----- Lambda-функции -----
+
+
+def get_square(num):
+    return num ** 2
+
+
+def get_double(arr_name: list) -> list:
+    return list(map(lambda num: num * 2, arr_name))
+
+
+print(get_square(5))
+def_square = lambda num: num ** 2
+print(def_square(10))
+print((lambda x: x ** 3)(10))
+
+list_num = [1, 2, 3]  # -> [2, 4, 6]
+print(get_double(list_num))
+
+# --------------------------------------------------------------------------
+# Lesson 44 ----- Регулярные выражения -----
+
+s_value = 'Это просто строка текстаю А это ещё одна строка текста'
+pattern = 'строка'
+
+print(s_value.find(pattern))
+print(pattern in s_value)
+
+if re.search(pattern, s_value):
+    print('Matched')
+else:
+    print('No match')
+
+matchad = re.search(pattern, s_value)
+print(matchad)
+
+# --- Потом продолжить ---
