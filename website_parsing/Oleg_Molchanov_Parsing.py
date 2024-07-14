@@ -7,7 +7,6 @@ import requests
 import csv
 from bs4 import BeautifulSoup
 
-
 def get_html_1(url):  # <- url - это ссылка на сайт  | <- Получение html документа
     respons = requests.get(url)  # <- respons - это ответ сервера | get - получение
     return respons.text
@@ -251,4 +250,113 @@ if __name__ == '__main__':
     main_5()
 
 # ------------------------------- 05 Чтение и запись данных в csv-файлы -------------------------------
+
+
+def write_csv_5(data: dict):
+    with open('names.csv', 'a') as file:
+        writer = csv.writer(file)
+        writer.writerow((data['name'], data['surname'], data['age']))
+
+
+def write_csv_6(data: dict):
+    with open('names_2.csv', 'a') as file:
+        order = ['name', 'surname', 'age']
+        writer = csv.DictWriter(file, fieldnames=order)
+        writer.writerow(data)
+
+
+def main_6():
+    d1 = {
+        'name': 'Petr',
+        'surname': 'Ivanov',
+        'age': 21,
+    }
+
+    d2 = {
+        'name': 'Ivan',
+        'surname': 'Ivanov',
+        'age': 18,
+    }
+
+    d3 = {
+        'name': 'Ksu',
+        'surname': 'Petrova',
+        'age': 32,
+    }
+
+    l = [d1, d2, d3]
+
+    with open('cmc.csv') as file:
+        fieldnames = ['name', 'url', 'price']
+        reader = csv.DictReader(file, fieldnames=fieldnames)
+        for row in reader:
+            print(row)
+
+    # for i in l:
+    #     write_csv_5(i)
+
+
+if __name__ == '__main__':
+    main_6()
+
+# ----------------------------- 06 Продвинутые приемы работы с библиотекой BeautifulSoup -----------------------------
+# .find()
+# .find_all()
+
+# .parent
+# .find_parent()
+
+# .parents
+# .find_parents()
+
+# .find_next_sibling()
+# .find_previous_sibling()
+
+def get_copywriter(tag):
+    whois = tag.find('div', id='whois').text.strip()
+    if 'Copywriter' in whois:
+        return tag
+    return None
+
+
+def get_salary(s):
+    # salary: 2700 usd per month
+    pattern = r'\d{1,9}'
+    salary = re.findall(pattern, s)[0]
+    print(salary)
+
+
+def main_7():
+    file = open('index.html').read()
+    soup = BeautifulSoup(file, 'lxml')
+    # row = soup.find_all('div', {'data-set': 'salary'})
+    #
+    # alena = soup.find('div', text='Alena').find_parent(class_='row')
+    # print(alena)
+
+    # copywriters = []
+    #
+    # persons = soup.find_all('div', class_='row')
+    # for person in persons:
+    #     cw = get_copywriter(person)
+    #     if cw:
+    #         copywriters.append(cw)
+    #
+    # print(copywriters)
+
+    salary = soup.find_all('div', text=re.compile('\d{1,9}'))
+    for i in salary:
+        print(i.text)
+
+    # ^ - начало строки
+    # $ - конец строки
+    # . - любой символ
+    # + - неограниченное количество вхождений
+    # '\d' - цифра
+    # '\w' - буквы, цифры, _
+
+
+
+if __name__ == '__main__':
+    main_7()
 
